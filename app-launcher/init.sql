@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS supervision_dev;
+CREATE DATABASE IF NOT EXISTS supervision_prod;

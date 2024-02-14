@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+#-------------------------------------------------------------------#
+  frontend:
+    build: ../frontend-react
+    ports:
+      - "3000:3000"
+#-------------------------------------------------------------------#
+  backend:
+    build: ../backend-api
+    ports:
+      - "3001:3001"
+    security_opt:
+     - no-new-privileges:true
+    restart: always
+    deploy:
+     replicas: 1
+    env_file:
+     - ../backend-api/.env.development.docker
+    depends_on:
+     - db
+#-------------------------------------------------------------------#
+  # db server
+  db:
+    container_name: db
+    image: mariadb:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: always
+    command: --init-file=/data/db/init.sql
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/data/db/init.sql
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: 4mvstW32kShcgsOMG5fh
+#--------------------------------------------------------------------------------#
+volumes:
+  db_data:
