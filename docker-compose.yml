@@ -6,20 +6,16 @@ services:
     build: ./frontend-react
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
 #-------------------------------------------------------------------#
   backend: 
     build: ./backend-api
     ports:
       - "3001:3001"
-    volumes:
-      - ./backend:/app
     environment:
       DB_URL: mongodb://db/zaksApp
 #-------------------------------------------------------------------#
   db:
-    image: 4.0.28-xenial
+    image: mongo:4.0.28-xenial
     restart: always
     ports:
       - "27017:27017"
@@ -28,4 +24,5 @@ services:
 #-------------------------------------------------------------------#
 volumes:
   zaksApp:
+  
 
