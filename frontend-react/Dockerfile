@@ -15,7 +15,6 @@ COPY . .
 
 ENV PORT=3000
 EXPOSE ${PORT}
-# ENV API_URL=http://zakaria.com
-  
+
 
 CMD ["npm", "start"]
