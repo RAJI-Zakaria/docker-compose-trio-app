@@ -2,15 +2,19 @@ version: "3.8"
 
 services:
 #-------------------------------------------------------------------#
-  frontend:
-    build: ../frontend-react
-    ports:
-      - "3000:3000"
+  # frontend:
+  #   container_name: frontend
+  #   build: ../frontend-react
+  #   ports:
+  #     - "3000:3000"
 #-------------------------------------------------------------------#
   backend:
+    container_name: backend
     build: ../backend-api
     ports:
       - "3001:3001"
+    volumes:
+      - ../backend-api:/app
     security_opt:
      - no-new-privileges:true
     restart: always
@@ -37,5 +41,23 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: 4mvstW32kShcgsOMG5fh
 #--------------------------------------------------------------------------------#
+  # Api gateway:
+  gateway:
+    container_name: gateway
+    build: ../gateway
+    security_opt:
+     - no-new-privileges:true
+    restart: always
+    depends_on:
+     - backend
+    ports:
+     - 5010:5010
+    env_file:
+     - ../gateway/.env
+#--------------------------------------------------------------------------------#
+
+
+
+
 volumes:
   db_data:
